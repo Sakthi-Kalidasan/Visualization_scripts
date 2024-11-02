@@ -1,4 +1,8 @@
+
+## Script to create a plot with IEEE style and save it as a high-resolution PNG file
+
 import numpy as np
+
 
 import matplotlib.pyplot as plt
 
