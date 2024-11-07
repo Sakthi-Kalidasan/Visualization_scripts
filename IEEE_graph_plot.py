@@ -1,27 +1,22 @@
-
 ## Script to create a plot with IEEE style and save it as a high-resolution PNG file
 
 import numpy as np
 import seaborn as sns
-
 import matplotlib.pyplot as plt
-
 import matplotlib as mpl
 import csv
 from scipy.stats import norm
-print(mpl.rcParams['text.latex.preamble'])
-print(mpl.rcParams['pgf.texsystem'])
 
 # Define a function to set the style for IEEE conference
 def set_ieee_style():
     sns.set_style("whitegrid")
     plt.rcParams.update({
-        'font.size': 10,
-        'axes.labelsize': 10,
-        'axes.titlesize': 10,
-        'xtick.labelsize': 8,
-        'ytick.labelsize': 8,
-        'legend.fontsize': 8,
+        'font.size': 12,  # Increased by 2
+        'axes.labelsize': 12,  # Increased by 2
+        'axes.titlesize': 12,  # Increased by 2
+        'xtick.labelsize': 10,  # Increased by 2
+        'ytick.labelsize': 10,  # Increased by 2
+        'legend.fontsize': 10,  # Increased by 2
         'figure.figsize': (4, 3.5),
         'figure.dpi': 300,
         'savefig.dpi': 300,
@@ -57,10 +52,9 @@ ax.plot(T, sf_ck2q_ps, label='sf corner')
 ax.plot(T, tt_ck2q_ps, label='tt corner')
 ax.plot(T, fs_ck2q_ps, label='fs corner')
 ax.plot(T, ff_ck2q_ps, label='ff corner')
-# Add labels and title
+# Add labels
 ax.set_xlabel('Temperature (°C)')
 ax.set_ylabel('Ck2Q (ps) ')
-ax.set_title('PVT Impact on Ck2Q')
 ax.legend()
 
 # Save the plot as a high-resolution PNG file
@@ -97,10 +91,9 @@ ax.plot(T, sf_noise_uV, label='sf corner')
 ax.plot(T, tt_noise_uV, label='tt corner')
 ax.plot(T, fs_noise_uV, label='fs corner')
 ax.plot(T, ff_noise_uV, label='ff corner')
-# Add labels and title
+# Add labels
 ax.set_xlabel('Temperature (°C)')
 ax.set_ylabel('Noise (uVrms) ')
-ax.set_title('PVT Impact on noise')
 ax.legend()
 
 # Save the plot as a high-resolution PNG file
@@ -108,7 +101,6 @@ plt.savefig('pvt_noise.png', bbox_inches='tight')
 
 # Show the plot
 plt.show()
-
 
 ## PVT Speed Calibration plot
 
@@ -136,10 +128,9 @@ ax.scatter(corner, ck2q_calib_ps_max, label='105°C')
 for i in range(len(corner)):
     ax.plot([corner[i], corner[i]], [ck2q_calib_ps_min[i], ck2q_calib_ps_max[i]], color='gray', linestyle='--')
 
-# Add labels and title
+# Add labels
 ax.set_xlabel('Corners')
 ax.set_ylabel('Ck2q (ps)')
-ax.set_title('Calibrated PVT Impact on speed')
 ax.legend()
 
 # Save the plot as a high-resolution PNG file
@@ -168,10 +159,9 @@ ax.scatter(corner, noise_calib_uV_max, label='105°C')
 for i in range(len(corner)):
     ax.plot([corner[i], corner[i]], [noise_calib_uV_min[i], noise_calib_uV_max[i]], color='gray', linestyle='--')
 
-# Add labels and title
+# Add labels
 ax.set_xlabel('Corners')
 ax.set_ylabel('Noise (uVrms)')
-ax.set_title('Calibrated PVT Impact on noise')
 ax.legend()
 
 # Save the plot as a high-resolution PNG file
@@ -196,10 +186,9 @@ fig, ax = plt.subplots()
 ax.scatter(corner, ck2q_load_cap_ps, label='Load cap')
 ax.scatter(corner, ck2q_supply_v, label='Supply voltage')
 
-# Add labels and title
+# Add labels
 ax.set_xlabel('Corners')
 ax.set_ylabel('Ck2q (ps)')
-ax.set_title('Supply voltage vs Load cap comparison')
 ax.legend()
 
 # Save the plot as a high-resolution PNG file
@@ -207,9 +196,6 @@ plt.savefig('ck2q_supply_v_load_comp.png', bbox_inches='tight')
 
 # Show the plot
 plt.show()
-
-
-
 
 ## Monte carlo simulation plot for offset
 
@@ -235,10 +221,9 @@ fig, ax = plt.subplots()
 
 ax.scatter(x_values, y_values, label='Input Offset', alpha=0.6)
 
-# Add labels and title
+# Add labels
 ax.set_xlabel('Input Offset (mV)')
 ax.set_ylabel('frequency')
-#ax.set_title('Monte Carlo Simulation Results')
 ax.legend()
 
 # Fit a normal distribution to the data
@@ -251,7 +236,6 @@ max_y = np.max(y_values)
 avg_y = np.mean(y_values)
 
 # Compute the scaling factor
-#scaling_factor = max_y / avg_y
 scaling_factor = 6.7
 
 # Plot the PDF of the fitted normal distribution
@@ -268,8 +252,7 @@ ax.vlines(mu, 0, norm.pdf(mu, mu, sigma) / scaling_factor, colors='r', linestyle
 for i in range(1, 4):  # Adding lines for 1, 2, and 3 sigma intervals
     ax.vlines(mu + i * sigma, 0, norm.pdf(mu + i * sigma, mu, sigma) / scaling_factor, colors='r', linestyles='dotted', linewidth=1)
     ax.vlines(mu - i * sigma, 0, norm.pdf(mu - i * sigma, mu, sigma) / scaling_factor, colors='r', linestyles='dotted', linewidth=1)
-# Add sigma value to the plot near the plot
-# Add sigma value to the plot near the plot
+
 # Add sigma value to the plot near the plot
 ax.text(mu + sigma, norm.pdf(mu + sigma, mu, sigma) / scaling_factor + 0.02 * max_y, 
     f'$\sigma = {sigma*1e3:.2f}mV$', fontsize=10, verticalalignment='bottom', 
