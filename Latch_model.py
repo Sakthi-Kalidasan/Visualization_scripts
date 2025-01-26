@@ -33,6 +33,7 @@ plt.axhline(y=Tau_target*1e12, color='r', linestyle='--', label='Target Tau = 50
 plt.xlabel('Current (I) [mA]')
 plt.ylabel('Tau [ps]')
 plt.yscale('log')
+plt.xscale('log')
 plt.title('Tau as a function of Current (I)')
 plt.legend()
 plt.grid(True)
@@ -53,7 +54,7 @@ plt.show()
 
 ## Noise analysis
 
-Vn_target = 500e-6
+Vn_target = 250e-6
 KT = 4.11e-21
 Gamma = 4/3
 
@@ -75,7 +76,7 @@ plt.legend()
 plt.grid(True)
 
 # Add text box displaying the noise target
-plt.text(0.05, 0.95, f'Noise Target Vn = {Vn_target*1e6:.2f} uVrms', transform=plt.gca().transAxes,
+plt.text(0.05, 0.95, f'Noise Target $V_{{n,in}}$ = {Vn_target*1e6:.2f} $\mu$Vrms', transform=plt.gca().transAxes,
          fontsize=10, verticalalignment='top', bbox=dict(boxstyle="round,pad=0.3", edgecolor='black', facecolor='white'))
 
 # Draw a vertical line at the intersection point and annotate it
@@ -93,3 +94,5 @@ plt.show()
 Scaling_factor = I_sweep[idx_target]/I_base
 
 print(f'Scaling factor = {Scaling_factor:.2f}')
+print(f'CL_target = {CL_target*1e15:.2f} fF')
+print(f'Tau_target = {Tau_target*1e12:.2f} ps')
